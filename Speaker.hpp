@@ -3,7 +3,7 @@
 
 class Speaker{
 public:
-	MakeSound(bool b);
+	void MakeSound(bool b);
 };
 
 #endif

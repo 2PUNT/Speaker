@@ -3,7 +3,7 @@
 
 class SpeakerControl{
 public:
-	MakeSound(char* rtttlString);
+	void MakeSound(char* rtttlString);
 };
 
 #endif
