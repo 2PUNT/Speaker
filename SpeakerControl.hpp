@@ -7,13 +7,6 @@
 #include "Speaker.hpp"
 #include "note.hpp"
 
-note* GameOverSound;
-note* ShootSound;
-note* HitSound;
-
-enum SpeakerControlMasterState{ Idle,  PlayingNote}; // in class?
-enum SpeakerControlSubState{ MakingSound, Silent };
-
 class SpeakerControl : public rtos::task<>{
 private:
 	rtos::pool<note*> soundPool;
@@ -21,8 +14,11 @@ private:
 	rtos::timer NoteDurationTimer;
 	rtos::timer NoteHalfPeriodTimer;
 	
+	enum SpeakerControlMasterState{ Idle,  PlayingNote};
+	enum SpeakerControlSubState{ MakingSound, Silent };
 	SpeakerControlMasterState masterState;
 	SpeakerControlSubState subState;
+	
 	bool breakSubStateLoop;
 	Speaker & speaker;
 	int noteIndex;
@@ -34,13 +30,15 @@ public:
 		NoteDurationTimer(this, "NoteDurationTimer"), NoteHalfPeriodTimer(this, "NoteHalfPeriodTimer"),
 		speaker(_speaker){masterState = Idle; subState = MakingSound;}
 	
-	/* static note GameOverSound[];
-	static note ShootSound[];
-	static note HitSound[]; */
-	
 	void MakeSound(note* Sound);
 	
 	void main();
+	
+	static note* GameOverSound;
+	static note* ShootSound;
+	static note* HitSound;
+	//static void createSounds();
+	
 };
 
 #endif

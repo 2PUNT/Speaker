@@ -13,8 +13,8 @@ void SpeakerControl::MakeSound(note* Sound){
 void SpeakerControl::main(){
 	rtos::event combinedEvents = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
 	rtos::event lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
+	hwlib::cout << "Starting up\n";
 	while(true){
-		hwlib::cout << "Starting up\n";
 		switch(masterState){
 			case Idle:
 				hwlib::cout << "Idle\n";
@@ -33,7 +33,7 @@ void SpeakerControl::main(){
 				while(!breakSubStateLoop){
 					switch(subState){ // optimization is possible
 						case MakingSound:
-							hwlib::cout << "MakingSound\n";
+							//hwlib::cout << "MakingSound\n";
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
 							speaker.MakeSound(true);
 							lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
@@ -52,7 +52,7 @@ void SpeakerControl::main(){
 							}
 							
 						case Silent:
-							hwlib::cout << "Silent\n";
+							//hwlib::cout << "Silent\n";
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
 							speaker.MakeSound(false);
 							lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
