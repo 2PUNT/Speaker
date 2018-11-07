@@ -48,6 +48,7 @@ void SpeakerControl::main(){
 								noteIndex = 0;
 								currentNote = soundNotes[noteIndex];
 							}
+							break;
 						}
 						case Silent:{
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
@@ -66,9 +67,11 @@ void SpeakerControl::main(){
 								noteIndex = 0;
 								currentNote = soundNotes[noteIndex];
 							}
+							break;
 						}
 					}
 				}
+				break;
 			}
 		}
 	}
