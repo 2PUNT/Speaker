@@ -7,6 +7,11 @@
 #include "Speaker.hpp"
 #include "note.hpp"
 
+extern note* GameOverSound;
+extern note* ShootSound;
+extern note* HitSound;
+//void createSounds();
+
 class SpeakerControl : public rtos::task<>{
 private:
 	rtos::pool<note*> soundPool;
@@ -33,11 +38,6 @@ public:
 	void MakeSound(note* Sound);
 	
 	void main();
-	
-	static note* GameOverSound;
-	static note* ShootSound;
-	static note* HitSound;
-	//static void createSounds();
 	
 };
 

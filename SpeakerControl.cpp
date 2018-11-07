@@ -16,24 +16,22 @@ void SpeakerControl::main(){
 	hwlib::cout << "Starting up\n";
 	while(true){
 		switch(masterState){
-			case Idle:
-				hwlib::cout << "Idle\n";
+			case Idle:{
 				speaker.MakeSound(false);
 				wait(newSoundFlag);
 				soundNotes = soundPool.read();
 				noteIndex = 0;
 				currentNote = soundNotes[noteIndex];
 				masterState = PlayingNote;
+				break;}
 				
-			case PlayingNote:
-				hwlib::cout << "PlayingNote\n";
+			case PlayingNote:{
 				NoteDurationTimer.set(currentNote.duration);
 				subState = MakingSound;
 				breakSubStateLoop = false;
 				while(!breakSubStateLoop){
 					switch(subState){ // optimization is possible
-						case MakingSound:
-							//hwlib::cout << "MakingSound\n";
+						case MakingSound:{
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
 							speaker.MakeSound(true);
 							lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
@@ -43,16 +41,15 @@ void SpeakerControl::main(){
 								breakSubStateLoop = true;
 								noteIndex++;
 								currentNote = soundNotes[noteIndex];
-								if(currentNote.frequency == -1) masterState = Idle;
+								if(currentNote.frequency == -1) {masterState = Idle; break;}
 							}else if(lastEvent == newSoundFlag){
 								breakSubStateLoop = true;
 								soundNotes = soundPool.read();
 								noteIndex = 0;
 								currentNote = soundNotes[noteIndex];
 							}
-							
-						case Silent:
-							//hwlib::cout << "Silent\n";
+						}
+						case Silent:{
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
 							speaker.MakeSound(false);
 							lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
@@ -62,16 +59,17 @@ void SpeakerControl::main(){
 								breakSubStateLoop = true;
 								noteIndex++;
 								currentNote = soundNotes[noteIndex];
-								if(currentNote.frequency == -1) masterState = Idle;
+								if(currentNote.frequency == -1) {masterState = Idle; break;}
 							}else if(lastEvent == newSoundFlag){
 								breakSubStateLoop = true;
 								soundNotes = soundPool.read();
 								noteIndex = 0;
 								currentNote = soundNotes[noteIndex];
 							}
-							
+						}
 					}
 				}
+			}
 		}
 	}
 }

@@ -1,6 +1,6 @@
 #ifndef _NOTE_HPP
 #define _NOTE_HPP
-
+#include "hwlib.hpp"
 // ===========================================================================
 //
 // frequencies of standard notes
@@ -43,7 +43,6 @@ public:
 	   duration = rhs.duration;
 	   return *this;
    }
-   
 };
 
 #endif
