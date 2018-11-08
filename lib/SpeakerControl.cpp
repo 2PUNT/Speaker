@@ -6,6 +6,7 @@
 #include "note.hpp"
 
 void SpeakerControl::MakeSound(note* Sound){
+	hwlib::cout << "SpeakerControl: New sound received\n";
 	soundPool.write(Sound);
 	newSoundFlag.set();
 }
@@ -13,10 +14,11 @@ void SpeakerControl::MakeSound(note* Sound){
 void SpeakerControl::main(){
 	rtos::event combinedEvents = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
 	rtos::event lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
-	hwlib::cout << "Starting up\n";
+	hwlib::cout << "SpeakerControl: Starting up\n";
 	while(true){
 		switch(masterState){
 			case Idle:{
+				hwlib::cout << "SpeakerControl: Now Idle\n";
 				speaker.MakeSound(false);
 				wait(newSoundFlag);
 				soundNotes = soundPool.read();
@@ -26,6 +28,7 @@ void SpeakerControl::main(){
 				break;}
 				
 			case PlayingNote:{
+				hwlib::cout << "SpeakerControl: PlayingNote\n";
 				NoteDurationTimer.set(currentNote.duration);
 				subState = MakingSound;
 				breakSubStateLoop = false;
@@ -34,7 +37,7 @@ void SpeakerControl::main(){
 						case MakingSound:{
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
 							speaker.MakeSound(true);
-							lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
+							//lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
 							lastEvent = wait(combinedEvents);
 							if(lastEvent == NoteHalfPeriodTimer) subState = Silent;
 							else if(lastEvent == NoteDurationTimer){
@@ -53,7 +56,7 @@ void SpeakerControl::main(){
 						case Silent:{
 							NoteHalfPeriodTimer.set(1000000/(2*currentNote.frequency));
 							speaker.MakeSound(false);
-							lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
+							//lastEvent = NoteDurationTimer+NoteHalfPeriodTimer+newSoundFlag;
 							lastEvent = wait(combinedEvents);
 							if(lastEvent == NoteHalfPeriodTimer) subState = MakingSound;
 							else if(lastEvent == NoteDurationTimer){
