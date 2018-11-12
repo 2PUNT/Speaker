@@ -28,7 +28,7 @@ void SpeakerControl::main(){
 				break;}
 				
 			case PlayingNote:{
-				hwlib::cout << "SpeakerControl: PlayingNote\n";
+				//hwlib::cout << "SpeakerControl: PlayingNote\n";
 				NoteDurationTimer.set(currentNote.duration);
 				subState = MakingSound;
 				breakSubStateLoop = false;

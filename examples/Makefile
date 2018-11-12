@@ -15,9 +15,9 @@ SOURCES := Speaker.cpp SpeakerControl.cpp SoundDefinitions.cpp
 HEADERS := note.hpp Speaker.hpp SpeakerControl.hpp
 
 # other places to look for files for this project
-SEARCH  := 
+SEARCH  := ../lib
 
 # set REATIVE to the next higher directory 
 # and defer to the Makefile.native there
-RELATIVE := $(RELATIVE)../
+RELATIVE := $(RELATIVE)../../
 include $(RELATIVE)Makefile.due
