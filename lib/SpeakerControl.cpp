@@ -18,7 +18,7 @@ void SpeakerControl::main(){
 	while(true){
 		switch(masterState){
 			case Idle:{
-				hwlib::cout << "SpeakerControl: Now Idle\n";
+				//hwlib::cout << "SpeakerControl: Now Idle\n";
 				speaker.MakeSound(false);
 				wait(newSoundFlag);
 				soundNotes = soundPool.read();
