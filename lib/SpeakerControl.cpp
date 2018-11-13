@@ -6,7 +6,7 @@
 #include "note.hpp"
 
 void SpeakerControl::MakeSound(note* Sound){
-	hwlib::cout << "SpeakerControl: New sound received\n";
+	//hwlib::cout << "SpeakerControl: New sound received\n";
 	soundPool.write(Sound);
 	newSoundFlag.set();
 }
