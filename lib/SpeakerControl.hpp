@@ -30,13 +30,25 @@ private:
 	note currentNote;
 	note* soundNotes;
 public:
+	///@fn SpeakerControl::SpeakerControl(const unsigned int priority, const char* taskName, Speaker & _speaker)
+    ///@brief The constructor for the SpeakerControl class.
+    ///@details This constructor creates a SpeakerControl object.
+	///@param priority The priority of the speaker.
+	///@param name The name of the speaker.
+	///@param _speaker A @c Speaker object.
 	SpeakerControl(const unsigned int priority, const char* taskName, Speaker & _speaker):
 		task(priority, taskName), soundPool("SoundPool"), newSoundFlag(this, "NewSoundFlag"),
 		NoteDurationTimer(this, "NoteDurationTimer"), NoteHalfPeriodTimer(this, "NoteHalfPeriodTimer"),
 		speaker(_speaker){masterState = Idle; subState = MakingSound;}
 	
+	///@fn void SpeakerControl::MakeSound(note* Sound)
+    ///@brief Plays sound.
+    ///@details This method plays a sound.
+	///@param Sound A @c note* object. These notes are defined in the @c note class.
 	void MakeSound(note* Sound);
 	
+	///@fn void Speaker::main()
+    ///@brief The main of the Speaker task.
 	void main();
 	
 };
